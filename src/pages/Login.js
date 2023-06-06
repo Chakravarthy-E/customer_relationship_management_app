@@ -15,7 +15,6 @@ const Login = () => {
     backgroundColor: "#8fc4b7",
     color: "white",
     fontSize: "16px",
-    // add more CSS properties as needed
   };
   const handleSelect = (e) => {
         setUserType(e)
@@ -55,7 +54,7 @@ const Login = () => {
               </div>
               <div className="d-flex justify-content-center align-items-center ">
                 <div
-                  className="card p-1 rounded-3 shadow-lg "
+                  className="card p-1 rounded-3 shadow-lg"
                   style={{ width: "18rem", height: "3rem" }}
                 >
                   <div className="d-flex justify-content-between align-items-center">
