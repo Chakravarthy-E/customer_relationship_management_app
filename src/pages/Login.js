@@ -38,7 +38,10 @@ const Login = () => {
 
     userSignIn(data)
       .then((response) => {
-        console.log(response);
+        const {status,data} = response
+        if(status===200){
+          console.log(data)
+        }
       })
       .catch((error) => {
         console.log(error);
