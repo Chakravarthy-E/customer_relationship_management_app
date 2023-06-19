@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
-import { userSignIn } from "../api/auth";
+import {userSignIn}  from "../api/auth";
 
 /**
  * Post API
@@ -38,9 +38,23 @@ const Login = () => {
 
     userSignIn(data)
       .then((response) => {
-        const {status,data} = response
-        if(status===200){
-          console.log(data)
+        const { status, data } = response;
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("userTypes", response.data.userTypes);
+        localStorage.setItem("userStatus", response.data.userStatus);
+        localStorage.setItem("token", response.data.accessToken);
+        if (response.data.userTypes === "CUSTOMER")
+          window.location.href = "/customer";
+        else if (response.data.userTypes === "ENGINEER")
+          window.location.href = "/engineer";
+        else if (response.data.userTypes === "ADMIN")
+          window.location.href = "/admin";
+        else window.location.href = "/";
+
+        if (status === 200) {
+          console.log(data);
         }
       })
       .catch((error) => {
@@ -56,10 +70,13 @@ const Login = () => {
   const handleSelect = (e) => {
     setUserType(e);
   };
+
+
+
   return (
     <div
       style={myStyle}
-      className="vh-100 d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-center vh-100"
     >
       <div className="card p-3 rounded-4 shadow-lg" style={{ width: "20rem" }}>
         <h4 className="text-center">{showSignUp ? "Sign Up" : "Log In"}</h4>
@@ -92,7 +109,7 @@ const Login = () => {
               </div>
               <div className="d-flex justify-content-center align-items-center ">
                 <div
-                  className="card p-1 rounded-3 shadow-lg"
+                  className="card p-1 rounded-3 shadow-lg "
                   style={{ width: "18rem", height: "3rem" }}
                 >
                   <div className="d-flex justify-content-between align-items-center">
@@ -110,6 +127,7 @@ const Login = () => {
                       <Dropdown.Item eventKey="ENGINEER">
                         ENGINEER
                       </Dropdown.Item>
+                      <Dropdown.Item eventKey="ADMIN">ADMIN</Dropdown.Item>
                     </DropdownButton>
                   </div>
                 </div>
@@ -138,7 +156,7 @@ const Login = () => {
           <div
             className="m-1 text-center"
             onClick={toggleSignUp}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", color: "#6C63FF", fontSize: "14px" }}
           >
             {showSignUp
               ? "Already have an account? Log In"
