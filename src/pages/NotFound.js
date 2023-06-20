@@ -10,9 +10,9 @@ const NotFound = () => {
   return (
     <div className="bg-light vh-100 d-flex justify-content-center align-items-center text-center">
       <div>
-        <h1>Not Found</h1>
+        <h1 className="mb-4">Not Found</h1>
         <img src={pagenotfound} alt="page not fumd" />
-        <p className="lead fw-bolder">Hmmm.... The page you are looking for does not exit</p>
+        <p className="lead fw-bolder mt-5">Hmmm.... The page you are looking for does not exit</p>
         <button className="btn text-white m-1 p-2" onClick={goBack} style={{backgroundColor:"#6C63FF"}}>
           Go back
         </button>
