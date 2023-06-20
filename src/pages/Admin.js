@@ -1,6 +1,6 @@
 import React from "react";
 import MaterialTable, { Column } from "@material-table/core";
-
+import Sidebar from "../components/Sidebar";
 const columns = [
   { title: "FirstName", field: "name" },
   { title: "LastName", field: "surname" },
@@ -18,7 +18,8 @@ const data = [
 
 const Admin = () => {
   return (
-    <div className="bg-light vh-100 p-5">
+    <div className="bg-light vh-100">
+    <Sidebar />
       <MaterialTable title="USERS" columns={columns} data={data} />
     </div>
   );
