@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { Modal,Button } from "react-bootstrap";
-import { fetchTicket,ticketUpdation } from "../api/ticket";
+import { Modal, Button } from "react-bootstrap";
+import { fetchTicket, ticketUpdation } from "../api/ticket";
 import Cards from "../components/Cards";
 import Sidebar from "../components/Sidebar";
-import { getAllUser,updateUserData } from "../api/user";
+import { getAllUser, updateUserData } from "../api/user";
 
 const columns = [
   { title: " ID", field: "id" },
@@ -18,10 +18,10 @@ const columns = [
     title: "STATUS",
     field: "status",
     lookup: {
-      "OPEN": "OPEN",
-      "IN_PROGRESS": "IN_PROGRESS",
-      "CLOSED": "CLOSED",
-      "BLOCKED": "BLOCKED",
+      OPEN: "OPEN",
+      IN_PROGRESS: "IN_PROGRESS",
+      CLOSED: "CLOSED",
+      BLOCKED: "BLOCKED",
     },
   },
 ];
@@ -35,9 +35,9 @@ const userColumns = [
     title: "STATUS",
     field: "userStatus",
     lookup: {
-      "APPROVED": "APPROVED",
-      "REJECTED": "REJECTED",
-      "PENDING": "PENDING",
+      APPROVED: "APPROVED",
+      REJECTED: "REJECTED",
+      PENDING: "PENDING",
     },
   },
 ];
@@ -49,7 +49,7 @@ const Admin = () => {
   const [userDetail, setUserDetail] = useState({});
   const [ticketUpdationModal, setTicketUpdationModal] = useState(false);
   const [selectedCurrTicket, setSelectedCurrTicket] = useState({});
-  
+
   const updateSelectedCurrTicket = (data) => setSelectedCurrTicket(data);
   const closeTicketUpdationModal = () => setTicketUpdationModal(false);
   const [userModal, setUserModal] = useState(false);
@@ -77,7 +77,6 @@ const Admin = () => {
       });
   };
 
-
   const fetchUsers = (userId) => {
     getAllUser(userId)
       .then(function (response) {
@@ -92,7 +91,6 @@ const Admin = () => {
         console.log(error);
       });
   };
-
 
   const updateTicketCount = (tickets) => {
     const data = {
@@ -117,7 +115,6 @@ const Admin = () => {
     setTicketStatusCount(Object.assign({}, data));
   };
 
-
   const editTicket = (ticketDetail) => {
     const ticket = {
       assignee: ticketDetail.assignee,
@@ -131,7 +128,6 @@ const Admin = () => {
     setTicketUpdationModal(true);
     setSelectedCurrTicket(ticket);
   };
-
 
   const onTicketUpdate = (e) => {
     if (e.target.name === "ticketPriority")
@@ -209,42 +205,41 @@ const Admin = () => {
       </div>
       {/** Cards */}
       <div className="row ms-5 ps-5 mb-3">
-        <Cards 
-         color="primary"
-         title="OPEN"
-         icon="envelope-open"
-         ticketCount={ticketStatusCount.open}
-         pathColor="blue"
+        <Cards
+          color="primary"
+          title="OPEN"
+          icon="envelope-open"
+          ticketCount={ticketStatusCount.open}
+          pathColor="blue"
         />
         <Cards
-        color="warning"
-        title="PROGRESS"
-        icon="hourglass-split"
-        ticketCount={ticketStatusCount.progress}
-        pathColor="brown"
+          color="warning"
+          title="PROGRESS"
+          icon="hourglass-split"
+          ticketCount={ticketStatusCount.progress}
+          pathColor="brown"
         />
 
-        <Cards 
-        color="success"
-        title="CLOSED"
-        icon="check2-circle"
-        ticketCount={ticketStatusCount.closed}
-        pathColor="darkgreen" 
+        <Cards
+          color="success"
+          title="CLOSED"
+          icon="check2-circle"
+          ticketCount={ticketStatusCount.closed}
+          pathColor="darkgreen"
         />
-        <Cards 
-        color="secondary"
-        title="BLOCKED"
-        icon="slash-circle"
-        ticketCount={ticketStatusCount.blocked}
-        pathColor="black"
-        
+        <Cards
+          color="secondary"
+          title="BLOCKED"
+          icon="slash-circle"
+          ticketCount={ticketStatusCount.blocked}
+          pathColor="black"
         />
-        {/**w end */}
+        {/*Cards end */}
       </div>
       {/**Tables */}
       <div className="container">
         <MaterialTable
-        onRowClick={(event, rowData) => editTicket(rowData)}
+          onRowClick={(event, rowData) => editTicket(rowData)}
           title="Ticket Details"
           columns={columns}
           data={ticketDetails}
@@ -286,7 +281,7 @@ const Admin = () => {
               color: "white",
             },
             rowStyle: {
-              fontSize:"12px"
+              fontSize: "12px",
             },
             exportMenu: [
               {
@@ -315,86 +310,102 @@ const Admin = () => {
             <Modal.Body>
               {/* submit the details and we will call the api  */}
               <form onSubmit={updateTicket}>
-              <div className="p-1">
-                <h5 className="card-subtitle mb-2 text-primary">
-                  ID: {selectedCurrTicket.id}
-                </h5>
-              </div>
-            
-              <div className="input-group mb-2">
-                <label className="label input-group-text label-md">Title</label>
-                <input
-                  type="text"
-                  disabled
-                  value={selectedCurrTicket.title}
-                  className="form-control"
-                />
-              </div>
-            
-              <div className="input-group mb-2">
-                <label className="label input-group-text label-md">Reporter</label>
-                <input
-                  type="text"
-                  disabled
-                  value={selectedCurrTicket.reporter}
-                  className="form-control"
-                />
-              </div>
-            
-              <div className="input-group mb-2">
-                <label className="label input-group-text label-md">Assignee</label>
-                <select className="form-select" name="assignee">
-                  <option>Utkarshini</option>
-                </select>
-              </div>
-            
-              <div className="input-group mb-2">
-                <label className="label input-group-text label-md">Priority</label>
-                <input
-                  type="number"
-                  value={selectedCurrTicket.ticketPriority}
-                  className="form-control"
-                  name="ticketPriority"
-                  onChange={onTicketUpdate}
-                />
-              </div>
-            
-              <div className="input-group mb-2">
-                <label className="label input-group-text label-md">Status</label>
-                <select
-                  className="form-select"
-                  name="status"
-                  value={selectedCurrTicket.status}
-                  onChange={onTicketUpdate}
-                >
-                  <option value="OPEN">OPEN</option>
-                  <option value="IN_PROGRESS">IN_PROGRESS</option>
-                  <option value="CLOSED">CLOSED</option>
-                  <option value="BLOCKED">BLOCKED</option>
-                </select>
-              </div>
-            
-              <div className="input-group mb-2">
-                <label className="label input-group-text label-md">Description</label>
-                <textarea
-                  type="text"
-                  value={selectedCurrTicket.description}
-                  onChange={onTicketUpdate}
-                  className="md-textarea form-control"
-                  rows="3"
-                  name="description"
-                />
-              </div>
-            
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="m-1" onClick={closeTicketUpdationModal}>
-                  Cancel
-                </Button>
-                <Button variant="primary" className="m-1" type="submit">
-                  Update
-                </Button>
-              </div>
-            </form> 
+                <div className="p-1">
+                  <h5 className="card-subtitle mb-2 text-primary">
+                    ID: {selectedCurrTicket.id}
+                  </h5>
+                </div>
+
+                <div className="input-group mb-2">
+                  <label className="label input-group-text label-md">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    disabled
+                    value={selectedCurrTicket.title}
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="input-group mb-2">
+                  <label className="label input-group-text label-md">
+                    Reporter
+                  </label>
+                  <input
+                    type="text"
+                    disabled
+                    value={selectedCurrTicket.reporter}
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="input-group mb-2">
+                  <label className="label input-group-text label-md">
+                    Assignee
+                  </label>
+                  <select className="form-select" name="assignee">
+                    <option>Utkarshini</option>
+                  </select>
+                </div>
+
+                <div className="input-group mb-2">
+                  <label className="label input-group-text label-md">
+                    Priority
+                  </label>
+                  <input
+                    type="number"
+                    value={selectedCurrTicket.ticketPriority}
+                    className="form-control"
+                    name="ticketPriority"
+                    onChange={onTicketUpdate}
+                  />
+                </div>
+
+                <div className="input-group mb-2">
+                  <label className="label input-group-text label-md">
+                    Status
+                  </label>
+                  <select
+                    className="form-select"
+                    name="status"
+                    value={selectedCurrTicket.status}
+                    onChange={onTicketUpdate}
+                  >
+                    <option value="OPEN">OPEN</option>
+                    <option value="IN_PROGRESS">IN_PROGRESS</option>
+                    <option value="CLOSED">CLOSED</option>
+                    <option value="BLOCKED">BLOCKED</option>
+                  </select>
+                </div>
+
+                <div className="input-group mb-2">
+                  <label className="label input-group-text label-md">
+                    Description
+                  </label>
+                  <textarea
+                    type="text"
+                    value={selectedCurrTicket.description}
+                    onChange={onTicketUpdate}
+                    className="md-textarea form-control"
+                    rows="3"
+                    name="description"
+                  />
+                </div>
+
+                <div className="d-flex justify-content-end">
+                  <Button
+                    variant="secondary"
+                    className="m-1"
+                    onClick={closeTicketUpdationModal}
+                  >
+                    Cancel
+                  </Button>
+                  <Button variant="primary" className="m-1" type="submit">
+                    Update
+                  </Button>
+                </div>
+              </form>
             </Modal.Body>
           </Modal>
         ) : null}
@@ -411,81 +422,98 @@ const Admin = () => {
               <Modal.Title>Edit Details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form onSubmit={updateUserDetail}>
-            <div className="p-1">
-              <h5 className="card-subtitle mb-2 text-success lead">
-                User ID: {userDetail.userId}
-              </h5>
-              <hr />
-          
-              <div className="input-group mb-3">
-                <label className="label input-group-text label-md">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={userDetail.name}
-                  disabled
-                />
-              </div>
-          
-              <div className="input-group mb-3">
-                <label className="label input-group-text label-md">Email</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={userDetail.email}
-                  onChange={changeUserDetail}
-                  disabled
-                />
-              </div>
-          
-              <div className="input-group mb-3">
-                <label className="label input-group-text label-md">Type</label>
-                <select className="form-select" name="type" value={userDetail.userTypes} disabled>
-                  <option value="ADMIN">ADMIN</option>
-                  <option value="CUSTOMER">CUSTOMER</option>
-                  <option value="ENGINEER">ENGINEER</option>
-                </select>
-              </div>
-          
-              <div className="input-group mb-3">
-                <label className="label input-group-text label-md">Status</label>
-                <select
-                  name="status"
-                  className="form-select"
-                  value={userDetail.userStatus}
-                  onChange={changeUserDetail}
-                >
-                  <option value="APPROVED">APPROVED</option>
-                  <option value="REJECTED">REJECTED</option>
-                  <option value="PENDING">PENDING</option>
-                </select>
-              </div>
-            </div>
-          
-            <div className="input-group justify-content-center">
-              <div className="m-1">
-                <Button variant="secondary" onClick={() => closeUserModal()}>
-                  Close
-                </Button>
-              </div>
-              <div className="m-1">
-                <Button variant="success" onClick={() => updateUserDetail()}>
-                  Update
-                </Button>
-              </div>
-            </div>
-          </form>
-          
+              <form onSubmit={updateUserDetail}>
+                <div className="p-1">
+                  <h5 className="card-subtitle mb-2 text-success lead">
+                    User ID: {userDetail.userId}
+                  </h5>
+                  <hr />
+
+                  <div className="input-group mb-3">
+                    <label className="label input-group-text label-md">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      value={userDetail.name}
+                      disabled
+                    />
+                  </div>
+
+                  <div className="input-group mb-3">
+                    <label className="label input-group-text label-md">
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      value={userDetail.email}
+                      onChange={changeUserDetail}
+                      disabled
+                    />
+                  </div>
+
+                  <div className="input-group mb-3">
+                    <label className="label input-group-text label-md">
+                      Type
+                    </label>
+                    <select
+                      className="form-select"
+                      name="type"
+                      value={userDetail.userTypes}
+                      disabled
+                    >
+                      <option value="ADMIN">ADMIN</option>
+                      <option value="CUSTOMER">CUSTOMER</option>
+                      <option value="ENGINEER">ENGINEER</option>
+                    </select>
+                  </div>
+
+                  <div className="input-group mb-3">
+                    <label className="label input-group-text label-md">
+                      Status
+                    </label>
+                    <select
+                      name="status"
+                      className="form-select"
+                      value={userDetail.userStatus}
+                      onChange={changeUserDetail}
+                    >
+                      <option value="APPROVED">APPROVED</option>
+                      <option value="REJECTED">REJECTED</option>
+                      <option value="PENDING">PENDING</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="input-group justify-content-center">
+                  <div className="m-1">
+                    <Button
+                      variant="secondary"
+                      onClick={() => closeUserModal()}
+                    >
+                      Close
+                    </Button>
+                  </div>
+                  <div className="m-1">
+                    <Button
+                      variant="success"
+                      onClick={() => updateUserDetail()}
+                    >
+                      Update
+                    </Button>
+                  </div>
+                </div>
+              </form>
             </Modal.Body>
             <Modal.Footer></Modal.Footer>
           </Modal>
         ) : (
           ""
         )}
-
       </div>
     </div>
   );
