@@ -1,10 +1,11 @@
 import { CSidebar, CSidebarNav, CNavItem, CNavTitle } from "@coreui/react";
-
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
-
+    const navigate = useNavigate()
   function logout() {
     localStorage.clear()
-    window.location.href = "/";
+    navigate("/")
+      
   }
 
   return (

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
-import {userSignIn}  from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { userSignIn,userSignUp } from "../api/auth";
+import "../App.css";
 
 /**
  * Post API
@@ -12,23 +14,48 @@ const Login = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [userType, setUserType] = useState("CUSTOMER");
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const toggleSignUp = () => {
     setShowSignUp(!showSignUp);
   };
 
-  const updateSignUpData = (e) => {
-    if (e.target.id === "userid") {
-      setUserId(e.target.value);
-    } else if (e.target.id === "password") {
-      setPassword(e.target.value);
+  const signupFn = (e) => {
+    const data = {
+      name:userName,
+      userId:userId,
+      email:userEmail,
+      userType:userType,
+      password:password
     }
+    e.preventDefault();
+
+    userSignUp(data)
+    .then(function (response) {
+      if (response.status === 201) {
+        setShowSignUp(false);
+        setMessage("User Signed Up Successfully...");
+      }
+    })
+    .catch(function (error) {
+      setMessage(error.response.data.message);
+    });
   };
 
-  const signupFn = () => {
-    console.log("sign up btn triggered");
+
+  const updateSignupData = (e) => {
+    if (e.target.id === "userId") setUserId(e.target.value);
+    else if (e.target.id === "password") setPassword(e.target.value);
+    else if (e.target.id === "username") setUserName(e.target.value);
+    else setUserEmail(e.target.value);
   };
+
+
   const loginFn = (e) => {
     e.preventDefault();
     const data = {
@@ -45,13 +72,10 @@ const Login = () => {
         localStorage.setItem("userTypes", response.data.userTypes);
         localStorage.setItem("userStatus", response.data.userStatus);
         localStorage.setItem("token", response.data.accessToken);
-        if (response.data.userTypes === "CUSTOMER")
-          window.location.href = "/customer";
-        else if (response.data.userTypes === "ENGINEER")
-          window.location.href = "/engineer";
-        else if (response.data.userTypes === "ADMIN")
-          window.location.href = "/admin";
-        else window.location.href = "/";
+        if (response.data.userTypes === "CUSTOMER") navigate("/customer");
+        else if (response.data.userTypes === "ENGINEER") navigate("/engineer");
+        else if (response.data.userTypes === "ADMIN") navigate("/admin");
+        else navigate("/");
 
         if (status === 200) {
           console.log(data);
@@ -59,6 +83,7 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
+        setMessage(error.response.data.message)
       });
   };
 
@@ -70,8 +95,6 @@ const Login = () => {
   const handleSelect = (e) => {
     setUserType(e);
   };
-
-
 
   return (
     <div
@@ -87,8 +110,8 @@ const Login = () => {
               className="form-control m-1"
               placeholder="User ID"
               value={userId}
-              onChange={updateSignUpData}
-              id="userid"
+              onChange={updateSignupData}
+              id="userId"
             />
           </div>
           {showSignUp && (
@@ -98,6 +121,9 @@ const Login = () => {
                   type="text"
                   className="form-control m-1"
                   placeholder="Username"
+                  value={userName}
+                  onChange={updateSignupData}
+                  id="username"
                 />
               </div>
               <div className="input-group">
@@ -105,6 +131,8 @@ const Login = () => {
                   type="email"
                   className="form-control m-1"
                   placeholder="Email"
+                  value={userEmail}
+                  onChange={updateSignupData}
                 />
               </div>
               <div className="d-flex justify-content-center align-items-center ">
@@ -141,7 +169,7 @@ const Login = () => {
               className="form-control m-1"
               placeholder="Password"
               value={password}
-              onChange={updateSignUpData}
+              onChange={updateSignupData}
               id="password"
             />
           </div>
@@ -162,6 +190,9 @@ const Login = () => {
               ? "Already have an account? Log In"
               : "Don't have an account? Sign Up"}
           </div>
+
+              <div className="text-center text-warning">{message}</div>
+
         </form>
       </div>
     </div>
