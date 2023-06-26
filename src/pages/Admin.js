@@ -191,329 +191,329 @@ const Admin = () => {
 
   console.log("***", ticketStatusCount);
   return (
-    <div className="bg-light vh-100">
+    <div className="vh-100%" style={{ backgroundColor: "#000814" }}>
       {/**Sidebar */}
       <Sidebar />
       {/**Welcome text */}
-      <div className="container p-3">
-        <h3 className="text-center text-primary">
+      <div className="container p-5">
+        <h3 className="text-center" style={{ color: "#DD58D6" }}>
           Welcome, {localStorage.getItem("name")}
         </h3>
-        <p className="text-muted text-center">
+        <p className="text-light text-center">
           Take a quick look at your admin stats below..
         </p>
-      </div>
-      {/** Cards */}
-      <div className="row ms-5 ps-5 mb-3">
-        <Cards
-          color="primary"
-          title="OPEN"
-          icon="envelope-open"
-          ticketCount={ticketStatusCount.open}
-          pathColor="blue"
-        />
-        <Cards
-          color="warning"
-          title="PROGRESS"
-          icon="hourglass-split"
-          ticketCount={ticketStatusCount.progress}
-          pathColor="brown"
-        />
+        {/** Cards */}
+        <div className="row ps-5 mb-5">
+          <Cards
+            color=""
+            title="OPEN"
+            icon="envelope-open"
+            ticketCount={ticketStatusCount.open}
+            pathColor="black"
+          />
+          <Cards
+            color=""
+            title="PROGRESS"
+            icon="hourglass-split"
+            ticketCount={ticketStatusCount.progress}
+            pathColor="black"
+          />
 
-        <Cards
-          color="success"
-          title="CLOSED"
-          icon="check2-circle"
-          ticketCount={ticketStatusCount.closed}
-          pathColor="darkgreen"
-        />
-        <Cards
-          color="secondary"
-          title="BLOCKED"
-          icon="slash-circle"
-          ticketCount={ticketStatusCount.blocked}
-          pathColor="black"
-        />
-        {/*Cards end */}
-      </div>
-      {/**Tables */}
-      <div className="container">
-        <MaterialTable
-          onRowClick={(event, rowData) => editTicket(rowData)}
-          title="Ticket Details"
-          columns={columns}
-          data={ticketDetails}
-          options={{
-            filtering: true,
-            headerStyle: {
-              backgroundColor: "#4890FD",
-              color: "white",
-              fontSize: "13px",
-            },
-            rowStyle: {
-              backgroundColor: "#fff",
-              fontSize: "12px",
-            },
-            exportMenu: [
-              {
-                label: "Export Pdf",
-                exportFunc: (cols, data) =>
-                  ExportPdf(cols, data, "TicketRecords"),
+          <Cards
+            color=""
+            title="CLOSED"
+            icon="check2-circle"
+            ticketCount={ticketStatusCount.closed}
+            pathColor="black"
+          />
+          <Cards
+            color=""
+            title="BLOCKED"
+            icon="slash-circle"
+            ticketCount={ticketStatusCount.blocked}
+            pathColor="black"
+          />
+          {/*Cards end */}
+        </div>
+        {/**Tables */}
+        <div className="ms-5">
+          <MaterialTable
+            onRowClick={(event, rowData) => editTicket(rowData)}
+            title="TICKET DETAILS"
+            columns={columns}
+            data={ticketDetails}
+            options={{
+              filtering: true,
+              headerStyle: {
+                backgroundColor: "#DD58D6",
+                color: "white",
+                fontSize: "13px",
               },
-              {
-                label: "Export Csv",
-                exportFunc: (cols, data) =>
-                  ExportCsv(cols, data, "TicketRecords"),
+              rowStyle: {
+                backgroundColor: "#fff",
+                fontSize: "12px",
               },
-            ],
-          }}
-        />
-        <hr className="m-5" />
-        <MaterialTable
-          onRowClick={(event, rowData) => fetchUsers(rowData.userId)}
-          title="User Details"
-          data={userList}
-          columns={userColumns}
-          options={{
-            filtering: true,
-            headerStyle: {
-              backgroundColor: "#87BEA5",
-              color: "white",
-            },
-            rowStyle: {
-              fontSize: "12px",
-            },
-            exportMenu: [
-              {
-                label: "Export Pdf",
-                exportFunc: (cols, data) =>
-                  ExportPdf(cols, data, "userRecords"),
+              exportMenu: [
+                {
+                  label: "Export Pdf",
+                  exportFunc: (cols, data) =>
+                    ExportPdf(cols, data, "TicketRecords"),
+                },
+                {
+                  label: "Export Csv",
+                  exportFunc: (cols, data) =>
+                    ExportCsv(cols, data, "TicketRecords"),
+                },
+              ],
+            }}
+          />
+          <hr  />
+          <MaterialTable
+            onRowClick={(event, rowData) => fetchUsers(rowData.userId)}
+            title="USER DETAILS"
+            data={userList}
+            columns={userColumns}
+            options={{
+              filtering: true,
+              headerStyle: {
+                backgroundColor: "#DD58D6",
+                color: "white",
               },
-              {
-                label: "Export Csv",
-                exportFunc: (cols, data) =>
-                  ExportCsv(cols, data, "userRecords"),
+              rowStyle: {
+                fontSize: "12px",
               },
-            ],
-          }}
-        />
-        {ticketUpdationModal ? (
-          <Modal
-            show={ticketUpdationModal}
-            onHide={closeTicketUpdationModal}
-            backdrop="static"
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Update Ticket</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              {/* submit the details and we will call the api  */}
-              <form onSubmit={updateTicket}>
-                <div className="p-1">
-                  <h5 className="card-subtitle mb-2 text-primary">
-                    ID: {selectedCurrTicket.id}
-                  </h5>
-                </div>
+              exportMenu: [
+                {
+                  label: "Export Pdf",
+                  exportFunc: (cols, data) =>
+                    ExportPdf(cols, data, "userRecords"),
+                },
+                {
+                  label: "Export Csv",
+                  exportFunc: (cols, data) =>
+                    ExportCsv(cols, data, "userRecords"),
+                },
+              ],
+            }}
+          />
+          {ticketUpdationModal ? (
+            <Modal
+              show={ticketUpdationModal}
+              onHide={closeTicketUpdationModal}
+              backdrop="static"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Update Ticket</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {/* submit the details and we will call the api  */}
+                <form onSubmit={updateTicket}>
+                  <div className="p-1">
+                    <h5 className="card-subtitle mb-2 text-primary">
+                      ID: {selectedCurrTicket.id}
+                    </h5>
+                  </div>
 
-                <div className="input-group mb-2">
-                  <label className="label input-group-text label-md">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    disabled
-                    value={selectedCurrTicket.title}
-                    className="form-control"
-                  />
-                </div>
-
-                <div className="input-group mb-2">
-                  <label className="label input-group-text label-md">
-                    Reporter
-                  </label>
-                  <input
-                    type="text"
-                    disabled
-                    value={selectedCurrTicket.reporter}
-                    className="form-control"
-                  />
-                </div>
-
-                <div className="input-group mb-2">
-                  <label className="label input-group-text label-md">
-                    Assignee
-                  </label>
-                  <select className="form-select" name="assignee">
-                    <option>Utkarshini</option>
-                  </select>
-                </div>
-
-                <div className="input-group mb-2">
-                  <label className="label input-group-text label-md">
-                    Priority
-                  </label>
-                  <input
-                    type="number"
-                    value={selectedCurrTicket.ticketPriority}
-                    className="form-control"
-                    name="ticketPriority"
-                    onChange={onTicketUpdate}
-                  />
-                </div>
-
-                <div className="input-group mb-2">
-                  <label className="label input-group-text label-md">
-                    Status
-                  </label>
-                  <select
-                    className="form-select"
-                    name="status"
-                    value={selectedCurrTicket.status}
-                    onChange={onTicketUpdate}
-                  >
-                    <option value="OPEN">OPEN</option>
-                    <option value="IN_PROGRESS">IN_PROGRESS</option>
-                    <option value="CLOSED">CLOSED</option>
-                    <option value="BLOCKED">BLOCKED</option>
-                  </select>
-                </div>
-
-                <div className="input-group mb-2">
-                  <label className="label input-group-text label-md">
-                    Description
-                  </label>
-                  <textarea
-                    type="text"
-                    value={selectedCurrTicket.description}
-                    onChange={onTicketUpdate}
-                    className="md-textarea form-control"
-                    rows="3"
-                    name="description"
-                  />
-                </div>
-
-                <div className="d-flex justify-content-end">
-                  <Button
-                    variant="secondary"
-                    className="m-1"
-                    onClick={closeTicketUpdationModal}
-                  >
-                    Cancel
-                  </Button>
-                  <Button variant="primary" className="m-1" type="submit">
-                    Update
-                  </Button>
-                </div>
-              </form>
-            </Modal.Body>
-          </Modal>
-        ) : null}
-
-        {userModal ? (
-          <Modal
-            show={userModal}
-            onHide={closeUserModal}
-            backdrop="static"
-            keyboard={false}
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Details</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form onSubmit={updateUserDetail}>
-                <div className="p-1">
-                  <h5 className="card-subtitle mb-2 text-success lead">
-                    User ID: {userDetail.userId}
-                  </h5>
-                  <hr />
-
-                  <div className="input-group mb-3">
+                  <div className="input-group mb-2">
                     <label className="label input-group-text label-md">
-                      Name
+                      Title
                     </label>
                     <input
                       type="text"
-                      className="form-control"
-                      name="name"
-                      value={userDetail.name}
                       disabled
+                      value={selectedCurrTicket.title}
+                      className="form-control"
                     />
                   </div>
 
-                  <div className="input-group mb-3">
+                  <div className="input-group mb-2">
                     <label className="label input-group-text label-md">
-                      Email
+                      Reporter
                     </label>
                     <input
                       type="text"
-                      className="form-control"
-                      name="name"
-                      value={userDetail.email}
-                      onChange={changeUserDetail}
                       disabled
+                      value={selectedCurrTicket.reporter}
+                      className="form-control"
                     />
                   </div>
 
-                  <div className="input-group mb-3">
+                  <div className="input-group mb-2">
                     <label className="label input-group-text label-md">
-                      Type
+                      Assignee
                     </label>
-                    <select
-                      className="form-select"
-                      name="type"
-                      value={userDetail.userTypes}
-                      disabled
-                    >
-                      <option value="ADMIN">ADMIN</option>
-                      <option value="CUSTOMER">CUSTOMER</option>
-                      <option value="ENGINEER">ENGINEER</option>
+                    <select className="form-select" name="assignee">
+                      <option>Praneeth</option>
                     </select>
                   </div>
 
-                  <div className="input-group mb-3">
+                  <div className="input-group mb-2">
+                    <label className="label input-group-text label-md">
+                      Priority
+                    </label>
+                    <input
+                      type="number"
+                      value={selectedCurrTicket.ticketPriority}
+                      className="form-control"
+                      name="ticketPriority"
+                      onChange={onTicketUpdate}
+                    />
+                  </div>
+
+                  <div className="input-group mb-2">
                     <label className="label input-group-text label-md">
                       Status
                     </label>
                     <select
-                      name="status"
                       className="form-select"
-                      value={userDetail.userStatus}
-                      onChange={changeUserDetail}
+                      name="status"
+                      value={selectedCurrTicket.status}
+                      onChange={onTicketUpdate}
                     >
-                      <option value="APPROVED">APPROVED</option>
-                      <option value="REJECTED">REJECTED</option>
-                      <option value="PENDING">PENDING</option>
+                      <option value="OPEN">OPEN</option>
+                      <option value="IN_PROGRESS">IN_PROGRESS</option>
+                      <option value="CLOSED">CLOSED</option>
+                      <option value="BLOCKED">BLOCKED</option>
                     </select>
                   </div>
-                </div>
 
-                <div className="input-group justify-content-center">
-                  <div className="m-1">
+                  <div className="input-group mb-2">
+                    <label className="label input-group-text label-md">
+                      Description
+                    </label>
+                    <textarea
+                      type="text"
+                      value={selectedCurrTicket.description}
+                      onChange={onTicketUpdate}
+                      className="md-textarea form-control"
+                      rows="3"
+                      name="description"
+                    />
+                  </div>
+
+                  <div className="d-flex justify-content-end">
                     <Button
                       variant="secondary"
-                      onClick={() => closeUserModal()}
+                      className="m-1"
+                      onClick={closeTicketUpdationModal}
                     >
-                      Close
+                      Cancel
                     </Button>
-                  </div>
-                  <div className="m-1">
-                    <Button
-                      variant="success"
-                      onClick={() => updateUserDetail()}
-                    >
+                    <Button variant="primary" className="m-1" type="submit">
                       Update
                     </Button>
                   </div>
-                </div>
-              </form>
-            </Modal.Body>
-            <Modal.Footer></Modal.Footer>
-          </Modal>
-        ) : (
-          ""
-        )}
+                </form>
+              </Modal.Body>
+            </Modal>
+          ) : null}
+
+          {userModal ? (
+            <Modal
+              show={userModal}
+              onHide={closeUserModal}
+              backdrop="static"
+              keyboard={false}
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Edit Details</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <form onSubmit={updateUserDetail}>
+                  <div className="p-1">
+                    <h5 className="card-subtitle mb-2 text-primary lead">
+                      User ID: {userDetail.userId}
+                    </h5>
+                    <hr />
+
+                    <div className="input-group mb-3">
+                      <label className="label input-group-text label-md">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="name"
+                        value={userDetail.name}
+                        disabled
+                      />
+                    </div>
+
+                    <div className="input-group mb-3">
+                      <label className="label input-group-text label-md">
+                        Email
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="name"
+                        value={userDetail.email}
+                        onChange={changeUserDetail}
+                        disabled
+                      />
+                    </div>
+
+                    <div className="input-group mb-3">
+                      <label className="label input-group-text label-md">
+                        Type
+                      </label>
+                      <select
+                        className="form-select"
+                        name="type"
+                        value={userDetail.userTypes}
+                        disabled
+                      >
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="CUSTOMER">CUSTOMER</option>
+                        <option value="ENGINEER">ENGINEER</option>
+                      </select>
+                    </div>
+
+                    <div className="input-group mb-3">
+                      <label className="label input-group-text label-md">
+                        Status
+                      </label>
+                      <select
+                        name="status"
+                        className="form-select"
+                        value={userDetail.userStatus}
+                        onChange={changeUserDetail}
+                      >
+                        <option value="APPROVED">APPROVED</option>
+                        <option value="REJECTED">REJECTED</option>
+                        <option value="PENDING">PENDING</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="input-group justify-content-center">
+                    <div className="m-1">
+                      <Button
+                        variant="secondary"
+                        onClick={() => closeUserModal()}
+                      >
+                        Close
+                      </Button>
+                    </div>
+                    <div className="m-1">
+                      <Button
+                        variant="primary"
+                        onClick={() => updateUserDetail()}
+                      >
+                        Update
+                      </Button>
+                    </div>
+                  </div>
+                </form>
+              </Modal.Body>
+              <Modal.Footer></Modal.Footer>
+            </Modal>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

@@ -4,13 +4,13 @@ import {CircularProgressbar,buildStyles} from "react-circular-progressbar"
 
 const Cards = ({color,title,icon,ticketCount,pathColor}) => {
   return (
-    <div className="col-xs-12 col-lg-3 col-md-6 my-1">
+    <div className="col-xs-11 col-lg-3 col-md-6 my-1">
     <div
       className={`card shadow bg-${color} bg-opacity-50 text-center`}
       style={{ width: 15 + "rem" }}
     >
       <h5 className={`card-subtitle my-2 fw-bolder text-${color}`}>
-        <i className={`bi bi-${icon} mx-2`}></i>
+        <i className={`bi bi-${icon} text-${pathColor} mx-2`}></i>
         {title}
       </h5>
       <hr />
