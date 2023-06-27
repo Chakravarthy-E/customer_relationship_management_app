@@ -127,6 +127,7 @@ const Admin = () => {
     };
     setTicketUpdationModal(true);
     setSelectedCurrTicket(ticket);
+    console.log(ticket);
   };
 
   const onTicketUpdate = (e) => {
@@ -138,6 +139,7 @@ const Admin = () => {
       selectedCurrTicket.assignee = e.target.value;
     else if (e.target.name === "description")
       selectedCurrTicket.description = e.target.value;
+    console.log(e);
 
     updateSelectedCurrTicket(Object.assign({}, selectedCurrTicket));
   };
@@ -145,13 +147,13 @@ const Admin = () => {
   const updateTicket = (e) => {
     e.preventDefault();
     ticketUpdation(selectedCurrTicket.id, selectedCurrTicket)
-      .then(function (response) {
+      .then((response) => {
         // closing the modal
         setTicketUpdationModal(false);
         // fetching the tickets again to update the table and the widgets
         fetchTickets();
       })
-      .catch(function (error) {
+      .catch((error) => {
         setMessage(error.response.data.message);
       });
   };
@@ -164,7 +166,7 @@ const Admin = () => {
       userName: userDetail.name,
     };
     updateUserData(userDetail.userId, data)
-      .then(function (response) {
+      .then((response) => {
         if (response.status === 200) {
           setMessage(response.message);
           let idx = userList.findIndex(
@@ -175,7 +177,7 @@ const Admin = () => {
           setMessage("User detail updated successfully");
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         if (error.status === 400) setMessage(error.message);
         else console.log(error);
       });
@@ -189,7 +191,7 @@ const Admin = () => {
     setUserModal(e.target.value);
   };
 
-  console.log("***", ticketStatusCount);
+  // console.log("***", ticketStatusCount);
   return (
     <div className="vh-100%" style={{ backgroundColor: "#000814" }}>
       {/**Sidebar */}
@@ -267,7 +269,7 @@ const Admin = () => {
               ],
             }}
           />
-          <hr  />
+          <hr />
           <MaterialTable
             onRowClick={(event, rowData) => fetchUsers(rowData.userId)}
             title="USER DETAILS"
@@ -311,7 +313,7 @@ const Admin = () => {
                 <form onSubmit={updateTicket}>
                   <div className="p-1">
                     <h5 className="card-subtitle mb-2 text-primary">
-                      ID: {selectedCurrTicket.id}
+                      ID: {selectedCurrTicket.id}{" "}
                     </h5>
                   </div>
 
@@ -343,9 +345,12 @@ const Admin = () => {
                     <label className="label input-group-text label-md">
                       Assignee
                     </label>
-                    <select className="form-select" name="assignee">
-                      <option>Praneeth</option>
-                    </select>
+                    <input type="text"
+                    className="form-control"
+                    name="assignee"
+                    onChange={onTicketUpdate}
+                    value={selectedCurrTicket.assignee}
+                  />
                   </div>
 
                   <div className="input-group mb-2">

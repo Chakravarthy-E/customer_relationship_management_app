@@ -88,20 +88,27 @@ const Login = () => {
   };
 
   const myStyle = {
-    backgroundColor: "light",
+    backgroundColor: "#000000",
     color: "white",
     fontSize: "16px",
+
   };
   const handleSelect = (e) => {
     setUserType(e);
   };
 
   return (
+    <div>
     <div
+    id="login"
       style={myStyle}
-      className="d-flex justify-content-center align-items-center vh-100"
+      className="vh-100"
     >
-      <div className="card p-3 rounded-4 shadow-lg" style={{ width: "20rem" }}>
+    <div className="context m-1">
+        <h1 className="mb-5" style={{color:"#6C63FF"}}>CRM Plus</h1>
+        <h3>The Art of Exceptional<br/> Customer Experiences.<br/> Powered by CRM.</h3>
+    </div>
+      <div className="card p-3 rounded-4 shadow-light" style={{ width: "20rem" }}>
         <h4 className="text-center">{showSignUp ? "Sign Up" : "Log In"}</h4>
         <form onSubmit={showSignUp ? signupFn : loginFn}>
           <div className="input-group">
@@ -195,6 +202,7 @@ const Login = () => {
 
         </form>
       </div>
+    </div>
     </div>
   );
 };
