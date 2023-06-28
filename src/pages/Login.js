@@ -197,9 +197,7 @@ const Login = () => {
               ? "Already have an account? Log In"
               : "Don't have an account? Sign Up"}
           </div>
-
               <div className="text-center text-warning">{message}</div>
-
         </form>
       </div>
     </div>

@@ -190,7 +190,7 @@ const Engineer = () => {
               },
               rowStyle: {
                 fontSize: "12px",
-                backgroundColor: "#C1ECE4",
+                backgroundColor: "#fff",
               },
             }}
           />
