@@ -68,13 +68,13 @@ const Engineer = () => {
 
     tickets.forEach((ticket) => {
       if (ticket.status === "OPEN") {
-        data.open =+ 1;
+        data.open += 1;
       } else if (ticket.status === "IN_PROGRESS") {
-        data.pending =+ 1;
+        data.pending += 1;
       } else if (ticket.status === "CLOSED") {
-        data.closed =+ 1;
+        data.closed += 1;
       } else if (ticket.status === "BLOCKED") {
-        data.blocked =+ 1;
+        data.blocked += 1;
       }
       console.log(ticket);
     });
