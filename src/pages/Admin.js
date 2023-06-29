@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Modal, Button } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { fetchTicket, ticketUpdation } from "../api/ticket";
 import Cards from "../components/Cards";
 import Sidebar from "../components/Sidebar";
@@ -154,7 +156,7 @@ const Admin = () => {
         fetchTickets();
       })
       .catch((error) => {
-        setMessage(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
 
@@ -174,11 +176,11 @@ const Admin = () => {
           );
           userList[idx] = userDetail;
           closeUserModal();
-          setMessage("User detail updated successfully");
+          toast.success("User detail updated successfully");
         }
       })
       .catch((error) => {
-        if (error.status === 400) setMessage(error.message);
+        if (error.status === 400) toast.error(error.message);
         else console.log(error);
       });
   };
@@ -204,6 +206,7 @@ const Admin = () => {
         <p className="text-light text-center">
           Take a quick look at your admin stats below..
         </p>
+        <ToastContainer position="top-center" />
         {/** Cards */}
         <div className="row ps-5 mb-5">
           <Cards

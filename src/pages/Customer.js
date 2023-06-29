@@ -3,6 +3,8 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { fetchTicket, ticketCreation, ticketUpdation } from "../api/ticket";
 import Cards from "../components/Cards";
 import Sidebar from "../components/Sidebar";
@@ -69,13 +71,13 @@ const Customer = () => {
     };
     ticketCreation(data)
       .then((res) => {
-        setMessage("Ticket Created Successfully !");
+        toast.success("Ticket Created Successfully !");
         setCreateTicketModal(false);
         fetchTickets();
       })
       .catch((error) => {
         if (error.res.status === 400) {
-          setMessage(error.res.data.message);
+          toast.error(error.res.data.message);
         } else if (error.res.status === 401) {
           logoutFn();
         } else {
@@ -157,7 +159,7 @@ const Customer = () => {
         </h3>
         <p className="text-center text-light">
           {" "}
-          Take a quick look at your user stats below..
+          Take a look at all your tickets below!
         </p>
         {/**Cards */}
         <div className="row ps-5 mb-5">
@@ -223,7 +225,7 @@ const Customer = () => {
             }}
           />
           <hr />
-          <p className="lead text-primary text-center">{message}</p>
+          <ToastContainer position="top-center" />
           <h4 className="text-center text-light my-4"> Facing any issues? Raise a ticket!</h4>
           <button
             className="btn btn-lg btn-primary form-control"

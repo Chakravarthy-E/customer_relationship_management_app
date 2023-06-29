@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MaterialTable from "@material-table/core";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import {
   Modal,
@@ -66,13 +68,13 @@ const Engineer = () => {
 
     tickets.forEach((ticket) => {
       if (ticket.status === "OPEN") {
-        data.open = +1;
+        data.open =+ 1;
       } else if (ticket.status === "IN_PROGRESS") {
-        data.pending = +1;
+        data.pending =+ 1;
       } else if (ticket.status === "CLOSED") {
-        data.closed = +1;
+        data.closed =+ 1;
       } else if (ticket.status === "BLOCKED") {
-        data.blocked = +1;
+        data.blocked =+ 1;
       }
       console.log(ticket);
     });
@@ -110,12 +112,12 @@ const Engineer = () => {
     e.preventDefault();
     ticketUpdation(selectedCurrTicket.id, selectedCurrTicket)
       .then(function (res) {
-        setMessage("Ticket updated Successfully");
+        toast.success("Ticket updated Successfully");
         fetchTickets();
         closeTicketUpdationModal();
       })
       .catch(function (error) {
-        setMessage(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
 
@@ -162,7 +164,7 @@ const Engineer = () => {
           />
         </div>
         <hr />
-        <h4 className="text-center">{message}</h4>
+        <ToastContainer position="top-center" />
         <div className="ms-5">
           <MaterialTable
             onRowClick={(event, rowData) => editTicket(rowData)}
