@@ -19,6 +19,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "./App.css";
 
+/**Hello */
 const ROLES = {
   CUSTOMER: "CUSTOMER",
   ADMIN: "ADMIN",
