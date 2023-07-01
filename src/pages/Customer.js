@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { fetchTicket, ticketCreation, ticketUpdation } from "../api/ticket";
 import Cards from "../components/Cards";
 import Sidebar from "../components/Sidebar";
+import "./styles/customer.css"
 
 const columns = [
   { title: "ID", field: "id" },
