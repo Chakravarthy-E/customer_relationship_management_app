@@ -3,14 +3,12 @@ import { DropdownButton, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { userSignIn, userSignUp } from "../api/auth";
 import { BarLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../App.css";
 
-/**
- * Post API
- * 1.grab the data
- * 2.store the data
- * 3.call the api
- */
+// toast.configure();
+
 const Login = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [userType, setUserType] = useState("CUSTOMER");
@@ -67,6 +65,17 @@ const Login = () => {
       password: password,
     };
 
+    if (userType === "ADMIN") {
+      toast('Your account is pending approval. Please wait for admin acceptance..', {
+        type: toast.TYPE.WARNING,
+      });
+    }
+    if(userType === "ENGINEER"){
+      toast("Your account is pending approval. Please wait for admin acceptance.",{
+        type:toast.TYPE.WARNING
+      })
+    }
+
     userSignIn(data)
       .then((response) => {
         const { status, data } = response;
@@ -105,20 +114,13 @@ const Login = () => {
   return (
     <div>
       <div id="login" style={myStyle} className="vh-100">
-        <div className="context m-1">
-          <h1 className="mb-5" style={{ color: "#6C63FF" }}>
-            CRM Plus
-          </h1>
-          <h3>
-            The Art of Exceptional
-            <br /> Customer Experiences.
-            <br /> Powered by CRM.
-          </h3>
-        </div>
         <div
           className="card p-3 rounded-4 shadow-light"
           style={{ width: "20rem" }}
         >
+        <h1 className="mb-3 text-center" style={{ color: "#6C63FF" }}>
+        CRM Plus
+      </h1>
           <h4 className="text-center">{showSignUp ? "Sign Up" : "Log In"}</h4>
           <form onSubmit={showSignUp ? signupFn : loginFn}>
             <div className="input-group">
@@ -187,10 +189,10 @@ const Login = () => {
                 style={{
                   backgroundColor: "#6C63FF",
                   position: "relative",
-                  width: "120px", // Set a fixed width for the button
-                  height: "40px", // Set a fixed height for the button
+                  width: "120px",
+                  height: "40px",
                 }}
-                disabled={isLoading} // Disable the button when loading
+                disabled={isLoading}
               >
                 {isLoading && (
                   <div
@@ -220,6 +222,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <ToastContainer position="top-center" />
     </div>
   );
 };

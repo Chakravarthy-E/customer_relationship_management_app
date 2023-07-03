@@ -2,13 +2,8 @@
     display: flex;
     justify-content:center;
     align-items: center;
-    gap: 100px;
 }
-.context{
-    text-align: start;
-    letter-spacing:4px;
 
-}
 #logout{
     color: white;
 }
